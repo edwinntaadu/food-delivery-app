@@ -25,10 +25,12 @@ const CategoryName = styled.p`
 `;
 
 const CategoryIcon = ({ icon, name }) => (
-  <IconWrapper>
-    <IconImage src={icon.src} alt={name} />
-    <CategoryName>{name}</CategoryName>
-  </IconWrapper>
+  
+  <div style={{height:50, width:50, borderRadius:10, background:"#fff", display:"flex", marginBottom:10, marginTop:10,
+    padding:5, boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)', justifyContent:"center", alignItems:"center"
+  }}>
+    {icon}
+  </div>
 );
 
 export default CategoryIcon;

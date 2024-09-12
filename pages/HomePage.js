@@ -7,11 +7,25 @@ import ice from '../public/icons/ice.jpg'
 import pizza from '../public/icons/pizza.jpg'
 import Navbar from '../components/Navbar';
 
+import { RiDrinks2Fill } from "react-icons/ri";
+import { GiFruitBowl } from "react-icons/gi";
+import { MdFreeBreakfast } from "react-icons/md";
+import { FaBowlFood } from "react-icons/fa6";
+import { LuDessert } from "react-icons/lu";
+import { LuSoup } from "react-icons/lu";
+import { CiSquareMore } from "react-icons/ci";
+
+
+
 const HomePage = () => {
   const categories = [
-    {icon: SaladIcon, name: 'Breakfast'},
-    {icon: ice, name: 'Lunch'},
-    {icon: pizza, name: 'Dinner'},
+    {icon: <GiFruitBowl fontSize={32}/>, name: 'fruits'},
+    {icon: <MdFreeBreakfast fontSize={32} />, name: 'Breakfast'},
+    {icon: <FaBowlFood fontSize={32}/>, name: 'Lunch'},
+    {icon: <LuSoup fontSize={32}/>, name: 'Dinner'},
+    {icon: <RiDrinks2Fill fontSize={32}/>, name: 'drinks'},
+    {icon: <LuDessert fontSize={32}/>, name: 'dessert'},
+
   ];
 
   const foods = [
@@ -43,10 +57,22 @@ const HomePage = () => {
   return (
     <>
       <Navbar />
-      <div className="categories" style={{ display: 'flex', justifyContent: 'space-around', margin: '20px 0' }}>
-        {categories.map((category, idx) => (
-          <CategoryIcon key={idx} icon={category.icon} name={category.name} />
-        ))}
+      <div className="categories" style={{ display: 'flex', justifyContent:"space-between", margin: '20px 0' }}>
+        
+        <div style={{display:'flex', justifyContent:"center", alignItems:"center", width:"80%",
+          overflowX:'auto',
+          padding:10,
+          whiteSpace:'nowrap',
+          gap:30
+         }}>
+          {categories.map((category, idx) => (
+            <CategoryIcon key={idx} icon={category.icon} name={category.name} />
+          ))}
+        </div>
+
+        <div style={{display:'flex', justifyContent:"center", alignItems:"center", width:"15%", }}>
+        <CiSquareMore fontSize={42} />
+        </div>
       </div>
       <div className="food-cards">
         {foods.map((food) => (
