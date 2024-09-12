@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
+import { BsBasket } from "react-icons/bs";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const NavbarContainer = styled.nav`
   display: flex;
@@ -11,12 +13,19 @@ const NavbarContainer = styled.nav`
 
 const Nav = () => (
   <NavbarContainer>
-    <Link href="/dishes">Dishes</Link>
-    <Link href="/orders">My Orders</Link>
-    <Link href="/account">Account</Link>
-    <button style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}>
-      My Cart
-    </button>
+
+    <div style={{width: 50, height: 50, borderRadius:10, backgroundColor:"#fff", display:"flex",
+      justifyContent:"center", alignItems:"center"
+    }}>
+      <GiHamburgerMenu color='#000' fontSize={32}/>
+    </div>
+ 
+
+    <div style={{width: 50, height: 50, borderRadius:10, backgroundColor:"#000", display:"flex",
+      justifyContent:"center", alignItems:"center"
+    }}>
+      <BsBasket color='#fff' fontSize={24}/>
+    </div>
   </NavbarContainer>
 );
 
