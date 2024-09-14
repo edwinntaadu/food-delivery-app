@@ -11,7 +11,7 @@ const NavbarContainer = styled.nav`
   padding: 20px;
 `;
 
-const Nav = () => (
+const Navbar = () => (
   <NavbarContainer>
 
     <div style={{width: 50, height: 50, borderRadius:10, backgroundColor:"#fff", display:"flex",
@@ -29,4 +29,4 @@ const Nav = () => (
   </NavbarContainer>
 );
 
-export default Nav;
+export default Navbar;
