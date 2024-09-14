@@ -1,66 +1,94 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { FaHome, FaListAlt, FaUserAlt } from 'react-icons/fa';
 import { RiHome2Line } from "react-icons/ri";
 import { CiWallet } from "react-icons/ci";
 import { FiMessageSquare } from "react-icons/fi";
 import { VscAccount } from "react-icons/vsc";
+import Link from 'next/link';
 
-
+// Styled component for the floating navigation bar
 const Nav = styled.nav`
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  background-color: ${({ transparent }) => (transparent ? 'rgba(0, 0, 0, 0.5)' : '#000')}; 
+  transition: background-color 0.3s ease; /* Smooth transition for background */
+  border-radius: 20px;
   display: flex;
   justify-content: space-around;
+  align-items: center;
   padding: 10px 0;
-  background-color: #fff;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3); 
+  z-index: 1000;
 `;
 
-const style = {
-  navCont:{
-    
-  }
-}
+const IconHolder = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #404040;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+`;
 
-const BottomNav = () => (
-  <div style={{
-    backgroundColor:"#000",
-    marginInline:10,
-    height:70,
-    //width: parent.width,
-    marginBottom:10,
-    borderRadius:20,
-    display:'flex',
-    justifyContent:"space-around",
-    alignItems:"center",
-    justifyItems:""
-  }}>
+const Text = styled.p`
+  color: #e6e6e6;
+  font-size: 16px;
+  margin-inline: 10px;
+`;
 
-    <div>
-      <div id='nav_iconHolder' style={{
-          //height:parent.height,
-          paddingRight:10,
-          paddingLeft:10,
-          borderRadius:10,
-          backgroundColor:"#404040",
-          display:'flex',
-          flexDirection:"row",
-          justifyContent:'center',
-          alignItems:'center'
-      }}>
-          <RiHome2Line  color='#e6e6e6' size={24}/>
-          <p style={{color:'#e6e6e6', fontSize:16, marginInline:10}}>Home</p>
-      </div>
-      
-      
-    </div>
-    
-    <CiWallet color='#e6e6e6' size={18}/>
-    <FiMessageSquare color='#e6e6e6' size={18}/>
-    <VscAccount color='#e6e6e6' size={18}/>
-  </div>
-);
+const BottomNav = () => {
+  const [isTransparent, setIsTransparent] = useState(false);
+
+  // Function to handle scroll event
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      setIsTransparent(true);
+    } else {
+      setIsTransparent(false);
+    }
+  };
+
+  useEffect(() => {
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  return (
+    <Nav transparent={isTransparent}>
+      {/* Home Icon */}
+      <Link href="/home" passHref>
+        <IconHolder>
+          <RiHome2Line color='#e6e6e6' size={24} />
+          <Text>Home</Text>
+        </IconHolder>
+      </Link>
+
+      {/* Wallet Icon */}
+      <Link href="/wallet" passHref>
+        <CiWallet color='#e6e6e6' size={18} />
+      </Link>
+
+      {/* Message Icon */}
+      <Link href="/messages" passHref>
+        <FiMessageSquare color='#e6e6e6' size={18} />
+      </Link>
+
+      {/* Account Icon */}
+      <Link href="/account" passHref>
+        <VscAccount color='#e6e6e6' size={18} />
+      </Link>
+    </Nav>
+  );
+};
 
 export default BottomNav;
