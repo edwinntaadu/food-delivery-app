@@ -7,8 +7,8 @@ export default function fruits() {
     <>
         <Navbar />
         <div style={{ padding: '20px' }}>
-            <h1>Fruits Page</h1>
-            <p>This is the fruits category page.</p>
+            <h1>Fruits Category</h1>
+            <p>This is the fruits category page. Here you will find all the fruit-related items.</p>
         </div>
         <BottomNav />
     </>
