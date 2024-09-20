@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Navbar from './Navbar';
 
 const Container = styled.div`
   padding: 20px;
@@ -15,6 +16,7 @@ const FoodImage = styled.img`
 
 const FoodDetails = ({ image, name, description, price }) => (
   <Container>
+    <Navbar />
     <FoodImage src={image} alt={name} />
     <h2>{name}</h2>
     <p>{description}</p>
