@@ -1,5 +1,5 @@
 /*
-Template Name: Foodx | Food Mobile PWA HTML Template
+Template Name: Kelewele | Food Mobile PWA HTML Template
 Author: Pillarix
 Author URI: https://wrapbootstrap.com/user/pillarix
 Version: 0.1
