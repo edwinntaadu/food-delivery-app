@@ -30,19 +30,19 @@
             <h5 class="display-4 fw-bold py-5">Create your <br>Account</h5>
             <div class="input-group mb-3 bg-white rounded-4 shadow p-1">
                <span class="input-group-text bg-white border-0 ps-3"><i class="mdi mdi-account-outline fs-4"></i></span>
-               <input type="text" class="form-control border-0 px-2 py-3" placeholder="Full Name">
+               <input id="signup_username" type="text" class="form-control border-0 px-2 py-3" placeholder="How should we call you?">
             </div>
             <div class="input-group mb-3 bg-white rounded-4 shadow p-1">
                <span class="input-group-text bg-white border-0 ps-3"><i class="mdi mdi-email-outline fs-4"></i></span>
-               <input type="text" class="form-control border-0 px-2 py-3" placeholder="Enter Your Email">
+               <input id="signup_email" type="text" class="form-control border-0 px-2 py-3" placeholder="Your Email">
             </div>
             <div class="input-group mb-3 bg-white rounded-4 shadow p-1">
                <span class="input-group-text bg-white border-0 ps-3"><i class="mdi mdi-lock-outline fs-4"></i></span>
-               <input type="text" class="form-control border-0 px-2 py-3" placeholder="Password">
+               <input id="signup_pass" type="password" class="form-control border-0 px-2 py-3" placeholder="Password">
             </div>
             <div class="col">
                <div class="py-4 vstack gap-3">
-                  <a href="verifiction.html" type="button" class="btn btn-primary rounded-4 w-100 btn-lg">Register</a>
+                  <button id="register_newUser_btn" type="button" class="btn btn-primary rounded-4 w-100 btn-lg">Register</button>
                   <p class="ps-2 fw-semibold fs-5 text-center mt-3">Already have an account? <a href="#" class="text-primary ps-2 text-decoration-none">Sign in</a></p>
                </div>
             </div>
@@ -149,6 +149,6 @@
       <!-- Sidebar js -->
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
-      <script src="js/script.js"></script>
+      <script src="js/script.js" type="module"></script>
    </body>
 </html>

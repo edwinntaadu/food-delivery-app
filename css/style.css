@@ -73,8 +73,8 @@ body {
 
 /* Bootstrap Custom */
 .form-check-input:checked {
-	background-color: #f7096e;
-	border-color: #f7096e;
+	background-color: #5e001d;
+	border-color: #5e001d;
 }
 .btn-outline-secondary {
 	border-color: #dee2e6;
@@ -85,26 +85,26 @@ body {
 	border-color: #d8d8d8;
 }
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-	background-color: #f7096e;
+	background-color: #5e001d;
 }
 .nav-link, .nav-link:hover {
-	color: #f7096e;
+	color: #5e001d;
 }
 .border-primary {
 	border-color: #d8d8d8 !important;
 }
 .accordion-button:not(.collapsed) {
 	background: #e7dcf2;
-	color: #f7096e;
+	color: #5e001d;
 }
 :focus {
 	box-shadow: none !important;
 }
 .bg-primary {
-	background-color: #ff2c86 !important;
+	background-color: #5e001d !important;
 }
 .text-primary {
-	color: #ff2c86 !important;
+	color: #5e001d !important;
 }
 .btn-lg {
 	font-size: 15px;
@@ -112,17 +112,17 @@ body {
 	font-weight: 600;
 }
 .btn-primary, .btn-outline-primary:hover {
-	background: #ff2c86;
-	border-color: #ff2c86;
+	background: #5e001d;
+	border-color: #5e001d;
 }
 .btn-primary:hover, .btn-primary:focus {
-	background: #f7096e;
-	border-color: #f7096e;
+	background: #5e001d;
+	border-color: #5e001d;
 }
 .btn-outline-primary {
 	background: rgb(101 4 181 / 12%);
 	border-color: rgb(101 4 181 / 11%);
-	color: #ff2c86;
+	color: #5e001d;
 }
 .bg-light{
 	background-color: #f3f5f6 !important;
@@ -314,8 +314,8 @@ body {
 }
 .btn-check+.btn:hover {
 	color: #ffffff;
-	background-color: #f7096e;
-	border-color: #f7096e;
+	background-color: #5e001d;
+	border-color: #5e001d;
 }
 .nav-pills .nav-link:hover, .nav-pills .show>.nav-link:hover {
 	color: #fff;
