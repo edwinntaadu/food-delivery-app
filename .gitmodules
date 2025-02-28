@@ -1,0 +1,3 @@
+[submodule "kelewele_backend"]
+	path = kelewele_backend
+	url = https://github.com/edwinntaadu/kelewele_backend.git
