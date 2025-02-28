@@ -29,27 +29,27 @@
          <div class="osahan-page-body vh-100 my-auto overflow-auto px-3 pt-1">
             <div class="bg-white rounded-5 text-center shadow p-5">
                <div>
-                  <h3 class="fw-bold text-black">Verfy Phone Number</h3>
+                  <h3 class="fw-bold text-black">Verify Phone Number</h3>
                   <p class="text-secondary mb-4">We Have Sent Code To Your Phone Number</p>
-                  <h6 class="text-secondary mb-4">+00 000000 0000</h6>
+                  <h6 id="displayPhone" class="text-secondary mb-4">+49 0000 00000 00</h6>
                   <div class="d-flex gap-2 text-center mb-4">
                      <div class="form-outline" data-mdb-input-init="">
-                        <input type="text" class="form-control text-center rounded-4 p-3 bg-white">
+                        <input id="verCode_1" type="text" maxlength="1" class="form-control text-center rounded-4 p-3 bg-white" oninput="validateNumericalPinInput(this)">
                      </div>
                      <div class="form-outline" data-mdb-input-init="">
-                        <input type="text" class="form-control text-center rounded-4 p-3 bg-white">
+                        <input id="verCode_2" type="text" maxlength="1" class="form-control text-center rounded-4 p-3 bg-white" oninput="validateNumericalPinInput(this)">
                      </div>
                      <div class="form-outline" data-mdb-input-init="">
-                        <input type="text" class="form-control text-center rounded-4 p-3 bg-white">
+                        <input id="verCode_3" type="text" maxlength="1" class="form-control text-center rounded-4 p-3 bg-white" oninput="validateNumericalPinInput(this)">
                      </div>
                      <div class="form-outline" data-mdb-input-init="">
-                        <input type="text" class="form-control text-center rounded-4 p-3 bg-white">
+                        <input id="verCode_4" type="text" maxlength="1" class="form-control text-center rounded-4 p-3 bg-white" oninput="validateNumericalPinInput(this)">
                      </div>
                   </div>
                   <div class="col">
                      <div class="vstack gap-3">
-                        <a href="login.html" type="button" class="btn btn-primary rounded-4 w-100 btn-lg">Verify</a>
-                        <a href="#" type="button" class="btn btn-outline-primary rounded-4 w-100 btn-lg">Send Again</a>
+                        <button id="verify_code_btn" type="button" class="btn btn-primary rounded-4 w-100 btn-lg">Verify</button>
+                        <button id="send_verification_code_again_btn" type="button" class="btn btn-outline-primary rounded-4 w-100 btn-lg">Send Again</button>
                      </div>
                   </div>
                </div>
@@ -152,6 +152,15 @@
       <!-- Sidebar js -->
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
-      <script src="js/script.js"></script>
+      <script src="js/script.js" type="module"></script>
+      <script>
+         function validateNumericalPinInput(input) {
+             input.value = input.value.replace(/[^0-9]/g, ''); 
+
+             if (input.value && input.nextElementSibling) {
+               input.nextElementSibling.focus(); 
+             }
+            }
+         </script>
    </body>
 </html>

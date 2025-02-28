@@ -30,12 +30,12 @@
             <h5 class="display-4 fw-bold py-5">Enter Your Phone<br>Number</h5>
             <div class="input-group mb-3 bg-white rounded-4 shadow p-1">
                <span class="input-group-text bg-white border-0 ps-3"><i class="mdi mdi-phone-outline fs-4"></i></span>
-               <input type="text" class="form-control border-0 px-2 py-3" placeholder="Phone Number">
+               <input id="verification_phone_signup" type="text" class="form-control border-0 px-2 py-3" placeholder="Phone Number">
             </div>
             <div class="col">
                <div class="py-4 vstack gap-3">
-                  <a href="verify.html" type="button" class="btn btn-primary rounded-4 w-100 btn-lg">Verification</a>
-                  <a href="#" type="button" class="btn btn-outline-primary rounded-4 w-100 btn-lg">Later</a>
+                  <button id="sendPhone_btn" type="button" class="btn btn-primary rounded-4 w-100 btn-lg">Verification</button>
+                  <button id ="skip_phone_verification" type="button" class="btn btn-outline-primary rounded-4 w-100 btn-lg">Later</button>
                </div>
             </div>
          </div>
@@ -136,6 +136,6 @@
       <!-- Sidebar js -->
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
-      <script src="js/script.js"></script>
+      <script src="js/script.js" type="module"></script>
    </body>
 </html>
