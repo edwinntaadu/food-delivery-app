@@ -48,8 +48,55 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("displayPhone").textContent = phoneNumber;
 });
 
+let checkedId = "";
+let uncheckedIds = [];
+document.addEventListener("DOMContentLoaded", function () {
+    const radioButtons = document.querySelectorAll("input[name='btnradio']");
+
+    function getCheckedAndUncheckedIds() {
+        
+
+        radioButtons.forEach((radio) => {
+            if (radio.checked) {
+                checkedId = radio.id;
+            } else {
+                uncheckedIds.push(radio.id);
+            }
+        });
+
+        console.log("Checked ID:", checkedId);
+        console.log("Unchecked IDs:", uncheckedIds);
+    }
+
+    // Listen for changes in radio buttons
+    radioButtons.forEach((radio) => {
+        radio.addEventListener("change", getCheckedAndUncheckedIds);
+    });
+
+    // Initial check on page load
+    getCheckedAndUncheckedIds();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("proceed_with_selected_pass_reset_btn").addEventListener("click", send_password_reset_code);
+});
+
 let server_url = config.API_URL
 
+
+function send_password_reset_code() {
+    console.log("Moving", checkedId);
+    if(checkedId==="btnradio1"){
+        //generate and send code to phone
+
+        window.location.href = './verify.html';
+    }   
+    if(checkedId==="btnradio2"){
+        //generate and send code to email
+        
+        window.location.href = './verify-email.html';
+    } 
+}
 
 async function register_newUser() {
     
@@ -133,3 +180,5 @@ async function submitPhoneVerificationCode() {
         alert("failed to create verification code")
     } */
 }
+
+
