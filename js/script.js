@@ -302,7 +302,7 @@ async function submitPhoneVerificationCode() {
         const response = await fetch(`${server_url}/user/verify-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ "phone":newUsers_phone, "code": full_code, "id": newUser_id })
+        body: JSON.stringify({ "phone":newUsers_phone, "code": full_code })
     });
 
     const res = await response.json();
