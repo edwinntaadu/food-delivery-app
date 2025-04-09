@@ -151,6 +151,11 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("proceed_with_selected_pass_reset_btn").addEventListener("click", send_password_reset_code);
 });
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("login_button").addEventListener("click", login);
+});
+
 let server_url = config.API_URL
 
 
@@ -293,7 +298,8 @@ async function submitPhoneVerificationCode() {
     let newUsers_phone = localStorage.getItem("reg_phone");
     let newUser_id = localStorage.getItem("reg_id");
 
-    const response = await fetch(`${server_url}/user/verify-code`, {
+    try{
+        const response = await fetch(`${server_url}/user/verify-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ "phone":newUsers_phone, "code": full_code, "id": newUser_id })
@@ -301,7 +307,62 @@ async function submitPhoneVerificationCode() {
 
     const res = await response.json();
     console.log(JSON.stringify(res))
+    console.log(newUser_id)   
 
+    if (res.code === 100) { // Assuming `res.success` indicates successful verification
+        alert("Verification successful! Redirecting to sign-in page...");
+        window.location.href = './login.html'; // Redirect to sign-in page
+    } else {
+        alert("Verification failed. Please try again.");
+        clearInputFields(); // Clear all input fields
+    }
+} catch (error) {
+    console.error("Error during verification:", error);
+    alert("An error occurred during verification. Please try again.");
+    clearInputFields(); // Clear all input fields
+}
+
+}
+
+// Helper function to clear all input fields
+function clearInputFields() {
+    document.getElementById("verCode_1").value = "";
+    document.getElementById("verCode_2").value = "";
+    document.getElementById("verCode_3").value = "";
+    document.getElementById("verCode_4").value = "";
+}
+
+async function login() {
+    let email = document.getElementById("login_email").value;
+    let password = document.getElementById("login_pass").value;
+
+    if (!email || !password) {
+        alert("Please enter both email and password.");
+        return;
+    }
+
+    try{
+    const response = await fetch(`${server_url}/user/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ "email":email, "password":password })
+    });
+
+    const res = await response.json();
+    console.log(JSON.stringify(res))
+    if (res.token) {
+        // Save user data to localStorage if needed
+        localStorage.setItem("loggedIn_userToken", res.token);
+        localStorage.setItem("userEmail", email);
+
+        // Redirect to home.html
+        window.location.href = "home.html";
+    } else {
+        alert(res.message || "Login failed. Please try again.");
+    }}catch (error) {
+        console.error("Error during login:", error);
+            alert("An error occurred. Please try again later.");
+    }
 }
 
 
