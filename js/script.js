@@ -352,6 +352,7 @@ async function login() {
     console.log(JSON.stringify(res))
     if (res.token) {
         // Save user data to localStorage if needed
+        console.log(res.token)
         localStorage.setItem("loggedIn_userToken", res.token);
         localStorage.setItem("userEmail", email);
 
