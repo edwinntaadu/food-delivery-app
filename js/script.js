@@ -48,6 +48,76 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("displayPhone").textContent = phoneNumber;
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    const iconElement = document.getElementById("reset_account_detail_icon");
+    const inputElement = document.getElementById("reset_account_detail_input");
+    const nextButton = document.getElementById("proceed_with_selected_pass_reset_btn");
+
+    iconElement.addEventListener("click", () => {
+        const icon = iconElement.querySelector("i");
+
+        if (icon.classList.contains("mdi-email-outline")) {
+            icon.classList.remove("mdi-email-outline");
+            icon.classList.add("mdi-phone-outline");
+            inputElement.placeholder = "Account Phone";
+        } else {
+            icon.classList.remove("mdi-phone-outline");
+            icon.classList.add("mdi-email-outline");
+            inputElement.placeholder = "Account Email";
+        }
+    });
+
+    nextButton.addEventListener("click", () => {
+        const inputValue = inputElement.value.trim();
+        const icon = iconElement.querySelector("i");
+
+        if (icon.classList.contains("mdi-email-outline")) {
+            // Validate email
+            if (validateEmail(inputValue)) {
+                localStorage.setItem("userContact", inputValue);
+                window.location.href = './verify-email.html';
+            } else {
+                alert("Please enter a valid email address.");
+            }
+        } else if (icon.classList.contains("mdi-phone-outline")) {
+            // Validate phone number
+            if (validatePhoneNumber(inputValue)) {
+                localStorage.setItem("userContact", inputValue);
+                window.location.href = './verify.html';
+            } else {
+                alert("Please enter a valid phone number.");
+            }
+        }
+    });
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function validatePhoneNumber(phone) {
+        const re = /^\+?[1-9]\d{1,14}$/; // Basic international phone number validation
+        return re.test(phone);
+    }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const displayEmailElement = document.getElementById("request-email-formatted");
+
+    // Retrieve the stored contact from localStorage
+    const userContact = localStorage.getItem("userContact");
+
+    if (userContact) {
+        displayEmailElement.textContent = formatEmail(userContact);
+        console.log("Email  : ", userContact);
+    }
+
+    function formatEmail(email) {
+        const firstPart = email.slice(0, 3);
+        const lastPart = email.slice(-9);
+        return `${firstPart}---${lastPart}`;
+    }
+});
+
 let checkedId = "";
 let uncheckedIds = [];
 document.addEventListener("DOMContentLoaded", function () {
@@ -81,21 +151,84 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("proceed_with_selected_pass_reset_btn").addEventListener("click", send_password_reset_code);
 });
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("login_button").addEventListener("click", login);
+});
+
 let server_url = config.API_URL
 
 
-function send_password_reset_code() {
-    console.log("Moving", checkedId);
-    if(checkedId==="btnradio1"){
-        //generate and send code to phone
+async function send_password_reset_code() {
+    if (checkedId === "btnradio1") {
+        // Handle phone entry
+        const phone = document.getElementById("reset_account_detail_input").value.trim();
 
-        window.location.href = './verify.html';
-    }   
-    if(checkedId==="btnradio2"){
-        //generate and send code to email
-        
-        window.location.href = './verify-email.html';
-    } 
+        if (validatePhoneNumber(phone)) {
+            try {
+                const response = await fetch(`${server_url}/user/phone_verification_reset-password`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "phone": phone })
+                });
+
+                const res = await response.json();
+                if (res.code === 100) { 
+                    alert("Verification code sent to your phone.");
+                    alert("Verification code sent to your email.", res.message); //TBD Remove this line
+                    localStorage.setItem("message", res.message); //TBD Remove this line
+                    localStorage.setItem("userContact", phone);
+                    //window.location.href = './verify.html';
+                } else {
+                    alert("Failed to send verification code. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred while sending the verification code. Please try again.");
+            }
+        } else {
+            alert("Please enter a valid phone number.");
+        }
+    } else if (checkedId === "btnradio2") {
+        // Handle email entry
+        const email = document.getElementById("reset_account_detail_input").value.trim();
+
+        if (validateEmail(email)) {
+            try {
+                const response = await fetch(`${server_url}/user/email_verification_reset-password`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "email": email })
+                });
+
+                const res = await response.json();
+                if (res.code === 100) { // Assuming 100 indicates success
+                    alert("Verification code sent to your email.");
+                    alert("Verification code sent to your email.", res.message); //TBD Remove this line
+                    localStorage.setItem("userContact", email);
+                    localStorage.setItem("message", res.message); //TBD Remove this line
+                    //window.location.href = './verify-email.html';
+                } else {
+                    alert("Failed to send verification code. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred while sending the verification code. Please try again.");
+            }
+        } else {
+            alert("Please enter a valid email address.");
+        }
+    }
+}
+
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+function validatePhoneNumber(phone) {
+    const re = /^\+?[1-9]\d{1,14}$/; // Basic international phone number validation
+    return re.test(phone);
 }
 
 async function register_newUser() {
@@ -165,20 +298,72 @@ async function submitPhoneVerificationCode() {
     let newUsers_phone = localStorage.getItem("reg_phone");
     let newUser_id = localStorage.getItem("reg_id");
 
-    const response = await fetch(`${server_url}/user/verify-code`, {
+    try{
+        const response = await fetch(`${server_url}/user/verify-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ "phone":newUsers_phone, "code": full_code, "id": newUser_id })
+        body: JSON.stringify({ "phone":newUsers_phone, "code": full_code })
     });
 
     const res = await response.json();
     console.log(JSON.stringify(res))
-    /* if(res.code){
-        alert(JSON.stringify(res.message))
-        window.location.href = './verify.html';
-    }else{
-        alert("failed to create verification code")
-    } */
+    console.log(newUser_id)   
+
+    if (res.code === 100) { // Assuming `res.success` indicates successful verification
+        alert("Verification successful! Redirecting to sign-in page...");
+        window.location.href = './login.html'; // Redirect to sign-in page
+    } else {
+        alert("Verification failed. Please try again.");
+        clearInputFields(); // Clear all input fields
+    }
+} catch (error) {
+    console.error("Error during verification:", error);
+    alert("An error occurred during verification. Please try again.");
+    clearInputFields(); // Clear all input fields
+}
+
+}
+
+// Helper function to clear all input fields
+function clearInputFields() {
+    document.getElementById("verCode_1").value = "";
+    document.getElementById("verCode_2").value = "";
+    document.getElementById("verCode_3").value = "";
+    document.getElementById("verCode_4").value = "";
+}
+
+async function login() {
+    let email = document.getElementById("login_email").value;
+    let password = document.getElementById("login_pass").value;
+
+    if (!email || !password) {
+        alert("Please enter both email and password.");
+        return;
+    }
+
+    try{
+    const response = await fetch(`${server_url}/user/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ "email":email, "password":password })
+    });
+
+    const res = await response.json();
+    console.log(JSON.stringify(res))
+    if (res.token) {
+        // Save user data to localStorage if needed
+        console.log(res.token)
+        localStorage.setItem("loggedIn_userToken", res.token);
+        localStorage.setItem("userEmail", email);
+
+        // Redirect to home.html
+        window.location.href = "home.html";
+    } else {
+        alert(res.message || "Login failed. Please try again.");
+    }}catch (error) {
+        console.error("Error during login:", error);
+            alert("An error occurred. Please try again later.");
+    }
 }
 
 

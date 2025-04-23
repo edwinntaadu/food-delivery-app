@@ -30,17 +30,17 @@
             <h5 class="display-4 fw-bold py-5">Login your <br>Account</h5>
             <div class="input-group mb-3 bg-white rounded-4 shadow p-1">
                <span class="input-group-text bg-white border-0 ps-3"><i class="mdi mdi-email-outline fs-4"></i></span>
-               <input type="text" class="form-control border-0 px-2 py-3" placeholder="Enter Your Email">
+               <input id="login_email" type="text" class="form-control border-0 px-2 py-3" placeholder="Enter Your Email">
             </div>
             <div class="input-group mb-3 bg-white rounded-4 shadow p-1">
                <span class="input-group-text bg-white border-0 ps-3"><i class="mdi mdi-lock-outline fs-4"></i></span>
-               <input type="text" class="form-control border-0 px-2 py-3" placeholder="Password">
+               <input id="login_pass" type="password" class="form-control border-0 px-2 py-3" placeholder="Password">
             </div>
             <div class="text-end mb-4"><a href="forget-password.html"class="text-secondary text-end text-decoration-none fs-6">Forget Password?</a></div>
             <div class="col">
                <div class="py-4 vstack gap-3">
-                  <a href="home.html" type="button" class="btn btn-primary rounded-4 w-100 btn-lg">Login</a>
-                  <p class="ps-2 fw-semibold fs-5 text-center mt-3 text-secondary">Create New Account? <a href="#" class="text-black ps-2 text-decoration-none">Sign up</a></p>
+                  <button id="login_button" type="button" class="btn btn-primary rounded-4 w-100 btn-lg">Login</button>
+                  <p class="ps-2 fw-semibold fs-5 text-center mt-3 text-secondary">Create New Account? <a href="register.html" class="text-black ps-2 text-decoration-none">Sign up</a></p>
                </div>
             </div>
          </div>
@@ -146,6 +146,6 @@
       <!-- Sidebar js -->
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
-      <script src="js/script.js"></script>
+      <script src="js/script.js" type="module"></script>
    </body>
 </html>

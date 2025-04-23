@@ -1,1 +1,6 @@
 kelewele_backend/
+.env
+node_modules/
+build/
+package-lock.json
+
