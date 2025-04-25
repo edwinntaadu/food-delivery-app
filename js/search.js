@@ -41,12 +41,11 @@ function createRestaurantCard(restaurant) {
           <p class="text-primary opacity-75 mb-0">
             <span class="mdi mdi-star text-primary"></span> ${restaurant.rating}
           </p>
-          <div class="bg-primary d-flex align-items-center rounded-circle justify-content-center p-1 ms-auto">
-              <span class="material-symbols-outlined text-white">bookmark</span>
-          </div>
+          <button class="btn btn-primary rounded-circle p-1 ms-auto bookmark-btn" data-id="${restaurant.id}">
+            <span class="material-symbols-outlined text-white">bookmark</span>
+          </button>
         </div>
       </div>
-      <a href="add-to-cart-2.html" class="stretched-link"></a>
     </div>
   `;
 }
