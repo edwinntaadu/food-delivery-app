@@ -20,7 +20,7 @@
       <div class="osahan-page d-flex flex-column vh-100 bg-light">
          <div class="osahan-page-header d-flex align-items-center justify-content-between mb-auto p-3">
             <a href="home.html" class="text-black bg-white rounded-pill shadow-sm icon-sm"><span class="mdi mdi-arrow-left mdi-18px"></span></a>
-            <h6 class="mb-0 ms-3 me-auto text-black fw-bold">Add New Address</h6>
+            <h6 class="mb-0 ms-3 me-auto text-black fw-bold">Add new delivery address</h6>
             <div class="d-flex align-items-center gap-2">
                <a href="notification.html" class="icon-sm shadow-sm"><span class="mdi mdi-bell-outline mdi-18px"></span></a>
                <a href="#" class="toggle d-flex align-items-center justify-content-center bg-white shadow-sm icon-sm fs-5 hc-nav-trigger hc-nav-1" role="button" aria-controls="hc-nav-1"><i class="bi bi-list mdi-18px"></i></a>
@@ -30,30 +30,40 @@
             <form>
                <label class="form-label">Street Number</label>
                <div class="mb-3 bg-white rounded-4 shadow p-1">
-                  <input type="text" class="form-control border-0 px-3 py-3" placeholder="Enter Street Number">
-               </div>
-               <label class="form-label">Apt / House Number</label>
-               <div class="mb-3 bg-white rounded-4 shadow p-1">
-                  <input type="text" class="form-control border-0 px-3 py-3" placeholder="Enter Apt / House Number">
+                  <input id="address_street" type="text" class="form-control border-0 px-3 py-3" placeholder="Enter Street Number">
                </div>
                <div class="row">
                   <div class="col-6">
-                     <label class="form-label">City</label>
+                     <label class="form-label">Apt / House Number</label>
                      <div class="input-group mb-3 bg-white rounded-4 shadow p-1">
-                        <input type="text" class="form-control border-0 px-3 py-3" placeholder="Enter City">
+                        <input id="address_houseNumber" type="text" class="form-control border-0 px-3 py-3" placeholder="Enter Apt / House Number">
                      </div>
                   </div>
                   <div class="col-6">
-                     <label class="form-label">State</label>
+                     <label class="form-label">Area code</label>
                      <div class="input-group mb-3 bg-white rounded-4 shadow p-1">
-                        <input type="text" class="form-control border-0 px-3 py-3" placeholder="Enter State">
+                        <input id="address_zipCode" type="text" class="form-control border-0 px-3 py-3" placeholder="Enter Area Code">
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-6">
+                     <label class="form-label">District</label>
+                     <div class="input-group mb-3 bg-white rounded-4 shadow p-1">
+                        <input id="address_district" type="text" class="form-control border-0 px-3 py-3" placeholder="Enter District">
+                     </div>
+                  </div>
+                  <div class="col-6">
+                     <label class="form-label">City</label>
+                     <div class="input-group mb-3 bg-white rounded-4 shadow p-1">
+                        <input id="address_city" type="text" class="form-control border-0 px-3 py-3" placeholder="Enter City">
                      </div>
                   </div>
                </div>
             </form>
          </div>
          <div class="osahan-page-footer mt-auto p-3">
-            <a href="#" class="btn btn-primary rounded-4 w-100 btn-lg w-100 mb-4">Save Changes</a>
+            <button id="save_changes_button" class="btn btn-primary rounded-4 w-100 btn-lg w-100 mb-4">Save Changes</button>
             <div class="d-flex justify-content-between align-items-center bg-white shadow rounded-pill px-3">
                <div class="text-center lh-1 col">
                   <a class="p-3 d-block" href="home.html"><span class="material-symbols-outlined text-secondary">home</span></a>
@@ -168,6 +178,6 @@
       <!-- Sidebar js -->
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
-      <script src="js/updateNewAddressScripts" type="module"></script>
+      <script src="js/updateNewAddressScripts.js" type="module"></script>
    </body>
 </html>

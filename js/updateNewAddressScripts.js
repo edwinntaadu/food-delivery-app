@@ -34,10 +34,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const addressFields = {
         street: document.getElementById("address_street"),
+        houseNo: document.getElementById("address_houseNumber"),
         city: document.getElementById("address_city"),
-        state: document.getElementById("address_state"),
-        zip: document.getElementById("address_zip"),
+        district: document.getElementById("address_district"),
+        zipCode: document.getElementById("address_zipCode"),
     };
+
+    const saveChangesButton = document.getElementById("save_changes_button");
+    saveChangesButton.disabled = true; // Initially disable the Save Changes button
 
     let originalAddress = {}; // Save a copy of the original address for comparison
 
@@ -63,9 +67,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Check if address exists and populate the fields
         const address = result.profile.address || {};
         addressFields.street.value = address.street || "";
+        addressFields.houseNo.value = address.houseNo || "";
+        addressFields.district.value = address.district || "";
         addressFields.city.value = address.city || "";
-        addressFields.state.value = address.state || "";
-        addressFields.zip.value = address.zip || "";
+        addressFields.zipCode.value = address.zipCode || "";
 
         // Save a copy of the original address for comparison
         originalAddress = { ...address };
@@ -75,32 +80,39 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert("An error occurred while fetching the user profile.");
     }
 
+    // Enable Save Changes button only if there are changes in the fields
+    Object.values(addressFields).forEach(field => {
+        field.addEventListener("input", () => {
+            const hasChanges = Object.entries(addressFields).some(([key, field]) => {
+                return field.value !== originalAddress[key];
+            });
+            saveChangesButton.disabled = !hasChanges; // Enable button if there are changes
+        });
+    });
+
     // Save changes when the "Save Changes" button is clicked
-    document.getElementById("save_changes_button").addEventListener("click", async () => {
-        const updatedAddress = {};
+    saveChangesButton.addEventListener("click", async () => {
+        const updatedAddress = [];
 
-        // Check for changes in the address fields
-        for (const [key, field] of Object.entries(addressFields)) {
-            if (field.value !== originalAddress[key]) {
-                updatedAddress[key] = field.value;
-            }
-        }
+         // Collect changes in the address fields
+    const addressObject = {};
+    for (const [key, field] of Object.entries(addressFields)) {
+        addressObject[key] = field.value;
+    }
 
-        // If no changes were made, do nothing
-        if (Object.keys(updatedAddress).length === 0) {
-            alert("No changes were made.");
-            return;
-        }
+    // Push the address object into the array
+    updatedAddress.push(addressObject);
 
+    console.log("Updated Address Array:", updatedAddress); 
         // Send updated address to the backend
         try {
-            const response = await fetch(`${server_url}/profile/updateProfileInformation`, {
+            const response = await fetch(`${server_url}/profile/addAddress`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`,
                 },
-                body: JSON.stringify({ address: updatedAddress }),
+                body: JSON.stringify({ updatedAddress }), // Send updatedAddress as an object
             });
 
             if (!response.ok) {
@@ -114,7 +126,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             alert("Profile address updated successfully!");
 
             // Update the original address with the new values
-            originalAddress = { ...originalAddress, ...updatedAddress };
+            originalAddress = { ...updatedAddress };
+
+            // Disable the Save Changes button after saving
+            saveChangesButton.disabled = true;
         } catch (error) {
             console.error("Error updating profile address:", error);
             alert("An error occurred while updating the profile address.");

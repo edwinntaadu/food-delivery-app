@@ -50,15 +50,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
   
       const result = await response.json(); // Read the response body only once
-      console.log(result);
-      // Display user profile information on the page
-      document.getElementById("location_user_label").textContent = result.profile.addresses[0].district+", "+result.profile.addresses[0].city  
+  
+      // Load Profile information into Page
+      document.getElementById("profileDisp_username").textContent = result.profile.username;
+      document.getElementById("profileDisp_email").textContent = result.profile.email;
       
   } catch (error) {
       console.error("Error fetching user profile:", error);
       alert("An error occurred while fetching the user profile.");
   }
   });
+
+
+
 
 
 
