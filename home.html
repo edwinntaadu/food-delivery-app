@@ -18,26 +18,7 @@
    </head>
    <body class="bg-light">
       <div class="osahan-page d-flex flex-column vh-100 bg-light">
-         <div class="osahan-page-header mb-auto p-3 bg-light">
-            <div class="d-flex align-items-center justify-content-between">
-               <a href="add-to-address.html" class="d-flex align-items-center text-decoration-none me-auto gap-1">
-                  <i class="mdi mdi-map-marker-circle h2 m-0 text-primary"></i>
-                  <div class="ms-2 lh-1">
-                     <h6 class="text-dark mb-0 fw-bold">Location</h6>
-                     <small id="location_user_label" class="Online text-muted opacity-75 mb-0">Ahrensfelde, Berlin</small>
-                  </div>
-               </a>
-               <div class="d-flex align-items-center gap-2">
-                  <a href="profile.html"><img class="img-fluid avtar-sm rounded-pill bg-white shadow-sm p-1" src="img/user/1.jpeg"></a>
-                  <a href="notification.html" class="icon-sm shadow-sm"><span class="mdi mdi-bell-outline text-primary mdi-18px"></span></a>
-                  <a href="#" class="toggle d-flex align-items-center justify-content-center bg-white shadow-sm icon-sm fs-5 hc-nav-trigger hc-nav-1" role="button" aria-controls="hc-nav-1"><i class="bi bi-list text-primary mdi-18px"></i></a>
-               </div>
-            </div>
-            <div class="input-group mt-3 bg-white rounded-pill shadow-sm overflow-hidden">
-               <span class="input-group-text bg-white border-0 ps-3"><i class="mdi mdi-magnify fs-4"></i></span>
-               <input type="text" class="form-control border-0 px-0 py-2" placeholder="Search">
-            </div>
-         </div>
+         <div id="header-container"></div>
          <div class="osahan-page-body vh-100 my-auto overflow-auto px-3 pb-3">
             <!-- slider-->
             <div id="carouselExampleDark" class="carousel carousel-dark slide">
@@ -303,6 +284,7 @@
       <!-- Sidebar js -->
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
-      <script src="js/homeScripts.js" type="module"></script>
+      <script src="js/script.js"></script>
+      <script src="components/header/header.js"></script>
    </body>
 </html>
