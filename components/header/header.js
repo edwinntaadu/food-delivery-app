@@ -1,101 +1,93 @@
-class Header {
-    constructor(data, templateId, containerId) {
-      this.data = data; 
-      this.templateId = templateId;
-      this.containerId = containerId;
-      this.element = null;
-    }
-  
-    render() {
-      const template = document.getElementById(this.templateId).content;
-      const container = document.getElementById(this.containerId);
+import config from '../../js/store/config.js';
 
-      if (!template) throw new Error(`Template with ID ${this.templateId} not found`);
-      if (!container) throw new Error(`Container with ID ${this.containerId} not found`);
-  
-      this.element = document.importNode(template, true);
-  
-      // Populate data
-      this.element.querySelector(".location-title").textContent = this.data.locationTitle || "Location";
-      this.element.querySelector(".location-subtitle").textContent = this.data.locationSubtitle || "";
-      this.element.querySelector(".location-link").href = this.data.locationLink || "#";
-      this.element.querySelector(".profile-img").src = this.data.profileImg || "img/user/1.jpeg";
-      this.element.querySelector(".profile-link").href = this.data.profileLink || "profile.html";
-      this.element.querySelector(".notification-link").href = this.data.notificationLink || "notification.html";
-      this.element.querySelector(".search-input").value = this.data.searchValue || "";
-  
-      // Add event listeners
-      this.addEventListeners();
-  
-      container.appendChild(this.element);
-    }
-  
-    addEventListeners() {
-      const searchInput = this.element.querySelector(".search-input");
-      searchInput.addEventListener("input", () => {
-        console.log(`Search query: ${searchInput.value}`);
-        // Add search logic here 
-      });
-  
-      // Reinitialize sidebar toggle 
-      // const sidebarToggle = this.element.querySelector(".sidebar-toggle");
-      // sidebarToggle.addEventListener("click", () => {
-      //  console.log("Sidebar toggle clicked");
-      //});
-    }
-  
-    update(newData) {
-      this.data = { ...this.data, ...newData };
-      this.element.querySelector(".location-title").textContent = this.data.locationTitle;
-      this.element.querySelector(".location-subtitle").textContent = this.data.locationSubtitle;
-      this.element.querySelector(".location-link").href = this.data.locationLink;
-      this.element.querySelector(".profile-img").src = this.data.profileImg;
-      this.element.querySelector(".profile-link").href = this.data.profileLink;
-      this.element.querySelector(".notification-link").href = this.data.notificationLink;
-      this.element.querySelector(".search-input").value = this.data.searchValue;
-    }
+export function renderHeader() {
+  return `
+    <div class="osahan-page-header mb-auto p-3">
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="add-to-address.html" class="d-flex align-items-center text-decoration-none me-auto gap-1">
+          <i class="mdi mdi-map-marker-circle h2 m-0 text-muted"></i>
+          <div class="ms-2 lh-1">
+            <h6 class="text-primary mb-0 fw-bold">Location</h6>
+            <small class="Online text-secondary opacity-75 mb-0">${district_city}</small>
+          </div>
+        </a>
+        <div class="d-flex align-items-center gap-2">
+          <a href="profile.html"><img class="img-fluid avtar-sm rounded-pill bg-white shadow-sm p-1" src="img/user/1.jpeg"></a>
+          <a href="notification.html" class="icon-sm shadow-sm"><span class="mdi mdi-bell-outline mdi-18px"></span></a>
+          <a href="#" class="toggle d-flex align-items-center justify-content-center bg-white shadow-sm icon-sm fs-5 hc-nav-trigger hc-nav-1" role="button" aria-controls="hc-nav-1"><i class="bi bi-list mdi-18px"></i></a>
+        </div>
+      </div>
+      <div class="input-group mt-3 bg-white rounded-pill shadow-sm overflow-hidden">
+        <span class="input-group-text bg-white border-0 ps-3"><i class="mdi mdi-magnify fs-4"></i></span>
+        <input type="text" class="form-control border-0 px-2 py-3" placeholder="Search">
+      </div>
+    </div>
+  `;
+}
+
+(function ($) {
+  "use strict"; // Start of use strict
+
+  // Sidebar
+  var $main_nav = $('#main-nav');
+  var $toggle = $('.toggle');
+
+  var defaultOptions = {
+      disableAt: false,
+      customToggle: $toggle,
+      levelSpacing: 40,
+      navTitle: '',
+      levelTitles: true,
+      levelTitleAsBack: true,
+      pushContent: '#container',
+      insertClose: 2
+  };
+  var Nav = $main_nav.hcOffcanvasNav(defaultOptions);
+
+})(jQuery);
+
+let server_url = config.API_URL;
+let district_city = "California, USA2"; // Default value
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const token = localStorage.getItem("loggedIn_userToken");
+
+  if (!token) {
+    alert("You are not logged in. Please log in first.");
+    window.location.href = "login.html";
+    return;
   }
 
-  // Function to fetch template and render the Header component
-function initHeader({ data, templateUrl = "components/header/header.html", templateId = "header-template", containerId = "header-container" }) {
-    document.addEventListener("DOMContentLoaded", () => {
-      fetch(templateUrl)
-        .then(response => {
-          if (!response.ok) throw new Error(`Failed to load ${templateUrl}: ${response.status}`);
-          return response.text();
-        })
-        .then(html => {
-          document.body.insertAdjacentHTML("beforeend", html);
-          const header = new Header(data, templateId, containerId);
-          header.render();
-        })
-        .catch(error => {
-          console.error("Error loading header template:", error);
-        });
+  try {
+    const response = await fetch(`${server_url}/profile/getProfileInformation`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
     });
-  } 
 
-  // Default header data
-const defaultHeaderData = {
-    locationTitle: "Location",
-    locationSubtitle: "California, USA",
-    locationLink: "add-to-address.html",
-    profileImg: "img/user/1.jpeg",
-    profileLink: "profile.html",
-    notificationLink: "notification.html",
-    searchValue: ""
-  };
+    if (response.status !== 200) {
+      const error = await response.json();
+      alert(error.message || "Failed to fetch user profile.");
+      return;
+    }
 
-  // Automatically initialize header with default or custom data
-(function () {
-    // Check for custom data provided by the page 
-    const headerData = window.headerData || defaultHeaderData;
-    initHeader({ data: headerData });
-  })();
+    const result = await response.json();
+    console.log("First address object:", result.profile.addresses[0]);
 
-  // Export for use in other scripts (optional, depending on module system)
-  // if (typeof module !== "undefined" && module.exports) {
-  //  module.exports = { Header, initHeader };
-  //} else {
-  //  window.initHeader = initHeader; // Make initHeader globally available for non-module environments
-  //}
+    if (result.profile.addresses && result.profile.addresses.length > 0) {
+      district_city = result.profile.addresses[0].district+", "+result.profile.addresses[0].city;
+    } else {
+      console.error("Addresses array is undefined or empty.");
+      district_city = "Default Location"; // Fallback value
+    }
+
+    document.getElementById("header-container").innerHTML = renderHeader();
+
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    district_city = "Default Location"; // Fallback value
+    document.getElementById("header-container").innerHTML = renderHeader();
+  }
+});

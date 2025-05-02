@@ -18,7 +18,9 @@
    </head>
    <body class="bg-light">
       <div class="osahan-page d-flex flex-column vh-100 bg-light">
-         <div id="header-container"></div>
+            <!-- header -->
+            <div id="header-container"></div>
+            <!-- header-end -->
          <div class="osahan-page-body vh-100 my-auto overflow-auto px-3 pb-3">
              <!-- slider -->
              <div id="slider-container"></div>
@@ -241,11 +243,13 @@
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
       <script src="js/script.js"></script>
-      <script src="components/header/header.js"></script>
+      <script src="./components/header/header.js" type="module"></script>
       <script src="./components/advertsSlider/advertSlider.js" type="module"></script>
       <script type="module">
          import { renderSlider } from './components/advertsSlider/advertSlider.js';
+         import { renderHeader } from './components/header/header.js';
          document.getElementById('slider-container').innerHTML = renderSlider();
+         document.getElementById('header-container').innerHTML = renderHeader();
       </script>
    </body>
 </html>
