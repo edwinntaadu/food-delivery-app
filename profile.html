@@ -77,25 +77,9 @@
                </div>
             </section>
          </div>
-         <div class="osahan-page-footer mt-auto p-3">
-            <div class="d-flex justify-content-between align-items-center bg-white shadow rounded-pill px-3">
-               <div class="text-center lh-1 col">
-                  <a class="p-3 d-block" href="home.html"><span class="material-symbols-outlined text-secondary">home</span></a>
-               </div>
-               <div class="text-center lh-1 col">
-                  <a class="p-3 d-block" href="like.html"><span class="material-symbols-outlined text-secondary">favorite</span></a>
-               </div>
-               <div class="text-center lh-1 col">
-                  <a class="p-3 d-block" href="chat.html"><span class="material-symbols-outlined text-secondary">shopping_bag</span></a>
-               </div>
-               <div class="text-center lh-1 col">
-                  <a class="p-3 d-block" href="notification.html"><span class="material-symbols-outlined text-secondary">notifications</span></a>
-               </div>
-               <div class="text-center lh-1 col">
-                  <a class="p-3 d-block" href="account-information.html"><span class="material-symbols-outlined text-primary">person</span></a>
-               </div>
-            </div>
-         </div>
+         <!-- footer start-->
+         <div id="footer-container"></div>
+         <!-- footer end -->
       </div>
       <!-- sidebar nav -->
       <nav id="main-nav">
@@ -192,5 +176,10 @@
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
       <script src="js/profilePageScripts.js" type="module"></script>
+      <script src="/components/footer/footer.js" type="module"></script>
+      <script type="module">
+         import { renderFooter } from '/components/footer/footer.js';
+         document.getElementById('footer-container').innerHTML = renderFooter();
+      </script>
    </body>
 </html>
