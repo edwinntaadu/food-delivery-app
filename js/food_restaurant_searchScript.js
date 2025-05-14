@@ -24,39 +24,24 @@ import config from './store/config.js';
 let server_url = config.API_URL
 
 
-//Function listeners and pointers
-document.addEventListener("DOMContentLoaded", async () => {
+async function getRestaurants_and_food() {
+
     const token = localStorage.getItem("loggedIn_userToken");
-     
     if (!token) {
       alert("You are not logged in. Please log in first.");
       window.location.href = "login.html";
       return;
     }
 
-
-    const response22 = await fetch(`${server_url}/populate-meals`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-        },
-    });
-
-    console.log("response22",response22);
-
-    
-  
     try {
-      const response = await fetch(`${server_url}/profile/getProfileInformation`, {
+      const response = await fetch(`${server_url}/search/getfoodandrestaurants`, {
           method: "GET",
           headers: {
               "Content-Type": "application/json",
               "Authorization": `Bearer ${token}`,
           },
       });
-
-        
+  
       if (!response.ok) {
           const error = await response.json(); // Read the response body only once
           alert(error.message || "Failed to fetch user profile.");
@@ -64,23 +49,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
   
       const result = await response.json(); // Read the response body only once
-      console.log("resssss",result.profile.addresses[0].district+", "+result.profile.addresses[0].city );
+  
       // Display user profile information on the page
-      const locationLabel = document.getElementById("location_user_label");
-      console.log("Location label element:", locationLabel);
-
-      if (!locationLabel) {
-       console.error("Element with id 'location_user_label' not found in the DOM.");
-      return;
-      }
-
-locationLabel.textContent = result.profile.addresses[0].district + ", " + result.profile.addresses[0].city;
+      document.getElementById("profileDisp_username").textContent = result.profile.username;
+      document.getElementById("profileDisp_email").textContent = result.profile.email;
       
   } catch (error) {
       console.error("Error fetching user profile:", error);
       alert("An error occurred while fetching the user profile.");
   }
-  });
+}
+
 
 
 
