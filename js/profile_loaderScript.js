@@ -61,34 +61,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   });
 
-  document.getElementById('logout_btn').addEventListener('click', async function (event) {
-        event.preventDefault(); // Prevent default anchor behavior
-        try {
 
-        const response = await fetch(`${server_url}/user/logout`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ "token": localStorage.getItem("loggedIn_userToken") })
-    });
-    
-        if (!response.ok) {
-            const error = await response.json(); // Read the response body only once
-            alert(error.message || "Failed to logout session.");
-            return;
-        }
-        
-        const result = await response.json(); // Read the response body only once
-        console.log(result.message); // Log the message from the server
-        localStorage.removeItem("loggedIn_userToken");
-        localStorage.removeItem("userEmail");
-        // Redirect to home.html
-        window.location.href = "login.html";
-        
-       
-    } catch (error) {
-        console.error("Error failed to logout:", error);
-    }        
-});
 
 
 

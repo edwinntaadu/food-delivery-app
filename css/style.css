@@ -339,3 +339,24 @@ body {
 	white-space: nowrap;
 	padding-right: 13px;
 }
+
+/* My custom CSS classes */
+
+.horizontal-slider {
+    display: flex;
+    gap: 1rem; 
+    overflow-x: auto; 
+    padding: 1rem 0; 
+    scroll-snap-type: x mandatory; 
+}
+
+.horizontal-slider::-webkit-scrollbar {
+    display: none; 
+}
+
+.horizontal-slider > * {
+    flex-shrink: 0; 
+    scroll-snap-align: start; 
+    width: 250px; 
+}
+

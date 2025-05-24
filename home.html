@@ -45,7 +45,9 @@
          import { renderHomeDefault } from './components/home_default/home_default.js';
          document.getElementById('header-container').innerHTML = renderHeader();
          document.getElementById('bottom-nav-container').innerHTML = renderBottomNav();
-         document.getElementById('dynamic-body-container').innerHTML = renderHomeDefault();
+
+         let theDefaultHome  = await renderHomeDefault()
+         document.getElementById('dynamic-body-container').innerHTML = theDefaultHome;
       </script>
    </body>
 </html>
