@@ -20,7 +20,7 @@
       <div class="osahan-page d-flex flex-column vh-100 bg-light">
          <div class="osahan-page-header mb-auto p-3">
             <div class="d-flex align-items-center justify-content-between">
-               <a href="profile.html" class="text-black bg-white rounded-pill icon-sm shadow-sm me-3"><span class="mdi mdi-arrow-left mdi-18px"></span></a>
+               <a href="home.html" class="text-black bg-white rounded-pill icon-sm shadow-sm me-3"><span class="mdi mdi-arrow-left mdi-18px"></span></a>
                <a href="add-to-address.html" class="d-flex align-items-center text-decoration-none me-auto gap-1">
                   <i class="mdi mdi-map-marker-circle h2 m-0 text-muted"></i>
                   <div class="ms-2 lh-1">
@@ -184,7 +184,7 @@
             </div>
          </div>
          <!-- footer -->
-         <div id="footer-container"></div>
+         <div id="bottomNav-container"></div>
          <!-- footer end-->
       </div>
       <!-- sidebar nav -->
@@ -282,10 +282,10 @@
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
       <script src="js/script.js"></script>
-      <script src="/components/footer/footer.js" type="module"></script>
+      <script src="/components/bottomNav/bottomNav.js" type="module"></script>
       <script type="module">
-         import { renderFooter } from '/components/footer/footer.js';
-         document.getElementById('footer-container').innerHTML = renderFooter();
+         import { renderBottomNav } from '/components/bottomNav/bottomNav.js';
+         document.getElementById('bottomNav-container').innerHTML = renderBottomNav();
       </script>
    </body>
 </html>
