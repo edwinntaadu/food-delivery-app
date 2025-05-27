@@ -27,7 +27,18 @@ export async function renderMostPopularFood() {
         const popularFoods = await response.json(); // Assuming the API returns an array of food objects
 
         // Generate the slider content
-        const sliderContent = popularFoods.slice(0, 5).map(food => `
+        const sliderContent = popularFoods.slice(0, 5).map(food =>{
+            // Encode food details as URL query parameters
+            const queryParams = new URLSearchParams({
+                name: food.name,
+                category: food.category,
+                imageUrl: food.imageUrl,
+                price: food.price,
+                preparationTime: food.preparationTime,
+                general_rating: food.general_rating,
+                description: food.description || 'Delicious dish' // Fallback description if API doesn't provide one
+            }).toString(); 
+            return `
             <div class="card rounded-4 border-0 shadow-sm osahan-card">
                 <div class="card-body d-flex flex-column">
                     <span class="material-symbols-outlined ms-auto">favorite</span>
@@ -45,9 +56,9 @@ export async function renderMostPopularFood() {
                         <a href="add-to-cart.html" class="text-decoration-none bg-dark rounded-pill p-1 d-flex align-items-center justify-content-center ms-auto"><span class="material-symbols-outlined text-white">add</span></a>
                     </div>
                 </div>
-                <a href="add-to-cart-2.html" class="stretched-link"></a>
+                <a href="add-to-cart-2.html?${queryParams}" class="stretched-link"></a>
             </div>
-        `).join('');
+        `}).join('');
 
         // Return the slider HTML
         return `
