@@ -29,13 +29,13 @@
          </div>
          <div class="osahan-page-body vh-100 my-auto overflow-auto p-3">
             <div class="head text-center">
-               <span class="badge bg-primary text-white rounded-pill py-2 px-3 mb-1">Healthy</span>
-               <h1 class="mb-0 display-5 fw-semibold">Chicken Hell</h1>
-               <p class="text-secondary opacity-75 mb-3">Best Chicken Ever</p>
-               <img class="img-fluid w-75 mb-4 rounded-5 shadow" src="img/list/6.jpeg">
+               <span class="badge bg-primary text-white rounded-pill py-2 px-3 mb-1 category-badge">Healthy</span>
+               <h1 class="mb-0 display-5 fw-semibold food-name">Chicken Hell</h1>
+               <p class="text-secondary opacity-75 mb-3 food-description">Best Chicken Ever</p>
+               <img class="img-fluid w-75 mb-4 rounded-5 shadow food-image" src="img/list/6.jpeg">
                <div class="add-btn d-flex align-items-center justify-content-center mb-3">
-                  <h1 class="mb-0 display-5 fw-semibold">$12</h1>
-                  <h3 class="text-secondary opacity-75 mb-0 mt-2">.99</h3>
+                  <h1 class="mb-0 display-5 fw-semibold food-price">$12</h1>
+                  <h3 class="text-secondary opacity-75 mb-0 mt-2 food-price-cents">.99</h3>
                </div>
                <div class="btn-group gap-2 mb-4" role="group" aria-label="Basic checkbox toggle button group">
                   <input type="checkbox" class="btn-check" id="btncheck1c" autocomplete="off">
@@ -70,7 +70,7 @@
             <a href="review-payment.html" class="btn btn-primary rounded-4 w-100 btn-lg">Add To Cart</a>
          </div>
       </div>
-		<!-- sidebar nav -->
+      <!-- sidebar nav -->
       <nav id="main-nav">
         <ul class="second-nav">
           <li class="osahan-user-profile bg-primary">
@@ -165,5 +165,29 @@
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
       <script src="js/script.js"></script>
+      
+      <!-- Dynamic content script -->
+      <script>
+         // Parse URL query parameters
+         const urlParams = new URLSearchParams(window.location.search);
+         const foodData = {
+            category: urlParams.get('category') || 'Healthy',
+            name: urlParams.get('name') || 'Chicken Hell',
+            description: urlParams.get('description') || 'Best Chicken Ever',
+            imageUrl: urlParams.get('imageUrl') || 'img/list/6.jpeg',
+            price: urlParams.get('price') || '12.99',
+            preparationTime: urlParams.get('preparationTime') || '30',
+            general_rating: urlParams.get('general_rating') || '4.5'
+         };
+
+         // Update DOM elements with food data
+         document.querySelector('.category-badge').textContent = foodData.category;
+         document.querySelector('.food-name').textContent = foodData.name;
+         document.querySelector('.food-description').textContent = foodData.description;
+         document.querySelector('.food-image').src = foodData.imageUrl;
+         const priceParts = foodData.price.split('.');
+         document.querySelector('.food-price').textContent = `$${priceParts[0]}`;
+         document.querySelector('.food-price-cents').textContent = priceParts[1] ? `.${priceParts[1]}` : '.99';
+      </script>
    </body>
 </html>
