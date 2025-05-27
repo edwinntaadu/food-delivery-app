@@ -53,10 +53,10 @@ export async function renderMostPopularFood() {
                     </div>
                     <div class="d-flex align-items-center">
                         <h4 class="mb-0">€${food.price} <span class="text-secondary fs-6 mb-0 fw-normal text-decoration-line-through">€${food.price+Math.floor(Math.random() * (14 - 3 + 1)) + 3}</span></h4>
-                        <a href="add-to-cart.html" class="text-decoration-none bg-dark rounded-pill p-1 d-flex align-items-center justify-content-center ms-auto"><span class="material-symbols-outlined text-white">add</span></a>
+                        <a href="add-to-cart-2.html?${queryParams}" class="text-decoration-none bg-dark rounded-pill p-1 d-flex align-items-center justify-content-center ms-auto"><span class="material-symbols-outlined text-white">add</span></a>
                     </div>
                 </div>
-                <a href="add-to-cart-2.html?${queryParams}" class="stretched-link"></a>
+                <!-- <a href="add-to-cart-2.html?${queryParams}" class="stretched-link"></a> -->
             </div>
         `}).join('');
 
