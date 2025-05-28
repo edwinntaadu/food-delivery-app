@@ -22,8 +22,13 @@
             <a href="home.html" class="text-black bg-white rounded-pill shadow-sm icon-sm"><span class="mdi mdi-arrow-left mdi-18px"></span></a>
             <h6 class="mb-0 ms-3 me-auto text-black fw-bold"></h6>
             <div class="d-flex align-items-center gap-2">
-               <a href="notification.html" class="icon-sm shadow-sm"><span class="mdi mdi-heart-outline mdi-18px"></span></a>
-               <a href="notification.html" class="icon-sm shadow-sm"><span class="mdi mdi-bell-outline mdi-18px"></span></a>
+               <a href="notification.html" class="icon-sm shadow-sm position-relative">
+                  <span class="mdi mdi-heart-outline mdi-18px"></span>
+               </a>
+               <a href="notification.html" class="icon-sm shadow-sm position-relative">
+                  <span class="mdi mdi-bell-outline mdi-18px"></span>
+                  <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle cart-count">0</span>
+               </a>
                <a href="#" class="toggle d-flex align-items-center justify-content-center bg-white shadow-sm icon-sm fs-5 hc-nav-trigger hc-nav-1" role="button" aria-controls="hc-nav-1"><i class="bi bi-list mdi-18px"></i></a>
             </div>
          </div>
@@ -67,7 +72,7 @@
             </div>
          </div>
          <div class="osahan-page-footer mt-auto p-3">
-            <a href="review-payment.html" class="btn btn-primary rounded-4 w-100 btn-lg">Add To Cart</a>
+            <a href="review-payment.html" class="btn btn-primary rounded-4 w-100 btn-lg add-to-cart-btn">Add To Cart</a>
          </div>
       </div>
       <!-- sidebar nav -->
@@ -165,8 +170,7 @@
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
       <script src="js/script.js"></script>
-      
-      <!-- Dynamic content script -->
+      <!-- Dynamic content and cart script -->
       <script>
          // Parse URL query parameters
          const urlParams = new URLSearchParams(window.location.search);
@@ -188,6 +192,31 @@
          const priceParts = foodData.price.split('.');
          document.querySelector('.food-price').textContent = `$${priceParts[0]}`;
          document.querySelector('.food-price-cents').textContent = priceParts[1] ? `.${priceParts[1]}` : '.99';
+
+         // Initialize cart count display
+         function updateCartCount() {
+            const cartCount = localStorage.getItem('cartItemCount') || '0';
+            document.querySelector('.cart-count').textContent = cartCount;
+         }
+
+         // Add to cart function
+         function addToCart() {
+            let cartCount = parseInt(localStorage.getItem('cartItemCount') || '0');
+            cartCount += 1;
+            localStorage.setItem('cartItemCount', cartCount);
+            updateCartCount();
+         }
+
+         // Attach event listener to Add To Cart button
+         document.querySelector('.add-to-cart-btn').addEventListener('click', (event) => {
+
+            event.preventDefault();
+            addToCart();
+            // window.location.href = 'review-payment.html';
+         });
+
+         // Initialize cart count on page load
+         updateCartCount();
       </script>
    </body>
 </html>
