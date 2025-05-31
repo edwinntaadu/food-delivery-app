@@ -25,8 +25,8 @@
                <a href="notification.html" class="icon-sm shadow-sm position-relative">
                   <span class="mdi mdi-heart-outline mdi-18px"></span>
                </a>
-               <a href="notification.html" class="icon-sm shadow-sm position-relative">
-                  <span class="mdi mdi-bell-outline mdi-18px"></span>
+               <a href="review-payment.html" class="icon-sm shadow-sm position-relative">
+                  <span class="mdi mdi-cart-outline mdi-18px"></span>
                   <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle cart-count">0</span>
                </a>
                <a href="#" class="toggle d-flex align-items-center justify-content-center bg-white shadow-sm icon-sm fs-5 hc-nav-trigger hc-nav-1" role="button" aria-controls="hc-nav-1"><i class="bi bi-list mdi-18px"></i></a>
@@ -195,24 +195,44 @@
 
          // Initialize cart count display
          function updateCartCount() {
-            const cartCount = localStorage.getItem('cartItemCount') || '0';
+            const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+            const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
             document.querySelector('.cart-count').textContent = cartCount;
          }
 
          // Add to cart function
          function addToCart() {
-            let cartCount = parseInt(localStorage.getItem('cartItemCount') || '0');
-            cartCount += 1;
-            localStorage.setItem('cartItemCount', cartCount);
+            const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+            const selectedSize = document.querySelector('.btn-check:checked + label')?.textContent || 'M';
+            const newItem = {
+               name: foodData.name,
+               price: parseFloat(foodData.price),
+               imageUrl: foodData.imageUrl,
+               quantity: 1,
+               size: selectedSize,
+               id: `${foodData.name}-${selectedSize}-${Date.now()}` // Unique ID for each item
+            };
+            console.log('Adding to cart:', newItem);
+
+            // Check if item with same name and size exists
+            const existingItemIndex = cartItems.findIndex(
+               item => item.name === newItem.name && item.size === newItem.size
+            );
+            if (existingItemIndex >= 0) {
+               cartItems[existingItemIndex].quantity += 1;
+            } else {
+               cartItems.push(newItem);
+            }
+
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
             updateCartCount();
+            // window.location.href = 'review-payment.html';
          }
 
          // Attach event listener to Add To Cart button
          document.querySelector('.add-to-cart-btn').addEventListener('click', (event) => {
-
             event.preventDefault();
             addToCart();
-            // window.location.href = 'review-payment.html';
          });
 
          // Initialize cart count on page load
