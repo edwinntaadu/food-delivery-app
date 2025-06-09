@@ -71,6 +71,7 @@ async function login() {
         console.log(res.token)
         localStorage.setItem("loggedIn_userToken", res.token);
         localStorage.setItem("userEmail", email);
+         // Assuming the response contains userId
         // Redirect to home.html
         window.location.href = "home.html";
     } else {

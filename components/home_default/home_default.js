@@ -1,10 +1,13 @@
 import config from '../../js/store/config.js';
 import { renderSlider } from '../advertsSlider/advertSlider.js';
 import {renderMostPopularFood} from '../mostPopularFood/mostPopularFood.js';
+import {renderMostPopularRestaurant} from '../mostPopularRestaurant/mostPopularRestaurant.js';
 
 export async function renderHomeDefault() {
 
    const mostPopularFoodHTML = await renderMostPopularFood();
+   
+   const mostPopularRestaurantHTML = await renderMostPopularRestaurant();
 
   return `
     <div>
@@ -58,22 +61,8 @@ export async function renderHomeDefault() {
             </div>
             <!-- Restaurants Start here !-->
             <h6 class="mb-3 mt-4 fw-bold">Nearby Resturents</h6>
-            <div class="card mb-0 rounded-4 border-0 shadow overflow-hidden osahan-card-2">
-               <img src="img/list/6.jpeg" class="card-img-top img-fluid">
-               <div class="card-body">
-                  <div class="d-flex">
-                     <span class="badge rounded-pill bg-info-subtle pt-1 text-info">Healthy</span>
-                  </div>
-                  <h5 class="mb-0 h6 fw-bold pt-1">Chicken Hell</h5>
-                  <div class="d-flex gap-2 align-items-center">
-                     <p class="text-secondary opacity-75 mb-0">24min</p>
-                     <p class="text-primary opacity-75 mb-0"><span class="mdi mdi-star text-primary"></span> 4.8</p>
-                     <div class="bg-primary d-flex align-items-center rounded-circle justify-content-center p-1 ms-auto">
-                        <span class="material-symbols-outlined text-white">bookmark</span>
-                     </div>
-                  </div>
-               </div>
-               <a href="add-to-cart-2.html" class="stretched-link"></a>
+            <div class="demo-slider">
+               ${mostPopularRestaurantHTML} <!-- Include the most popular restaurants cards here -->
             </div>
     </div>
   `;
