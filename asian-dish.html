@@ -81,7 +81,7 @@
             </div>
          </div>
          <!-- footer -->
-         <div id="footer-container"></div>
+         <div id="bottomNav-container"></div>
          <!-- footer end-->
       </div>
       <!-- sidebar nav -->
@@ -179,10 +179,10 @@
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
       <script src="js/script.js"></script>
-      <script src="/components/footer/footer.js" type="module"></script>
+      <script src="/components/bottomNav/bottomNav.js" type="module"></script>
       <script type="module">
-         import { renderFooter } from '/components/footer/footer.js';
-         document.getElementById('footer-container').innerHTML = renderFooter();
+         import { renderBottomNav } from '/components/bottomNav/bottomNav.js';
+         document.getElementById('bottomNav-container').innerHTML = renderBottomNav();
       </script>
    </body>
 </html>

@@ -115,7 +115,18 @@ export async function renderMostPopularFood() {
         console.log("popularFoods", popularFoods);
 
         // Generate the slider content
-        const sliderContent = popularFoods.slice(0, 5).map(food => `
+        const sliderContent = popularFoods.slice(0, 5).map(food =>{
+            // Encode food details as URL query parameters
+            const queryParams = new URLSearchParams({
+                name: food.name,
+                category: food.category,
+                imageUrl: food.imageUrl,
+                price: food.price,
+                preparationTime: food.preparationTime,
+                general_rating: food.general_rating,
+                description: food.description || 'Delicious dish' // Fallback description if API doesn't provide one
+            }).toString(); 
+            return `
             <div class="card rounded-4 border-0 shadow-sm osahan-card">
                 <div class="card-body d-flex flex-column">
                     <span role="button" onclick="addRemove_to_favorites('${food._id}', ${food.isFavorite}, this)"
@@ -133,11 +144,12 @@ export async function renderMostPopularFood() {
                     </div>
                     <div class="d-flex align-items-center">
                         <h4 class="mb-0">€${food.price} <span class="text-secondary fs-6 mb-0 fw-normal text-decoration-line-through">€${food.price+Math.floor(Math.random() * (14 - 3 + 1)) + 3}</span></h4>
-                        <a href="add-to-cart.html" class="text-decoration-none bg-dark rounded-pill p-1 d-flex align-items-center justify-content-center ms-auto"><span class="material-symbols-outlined text-white">add</span></a>
+                        <a href="add-to-cart-2.html?${queryParams}" class="text-decoration-none bg-dark rounded-pill p-1 d-flex align-items-center justify-content-center ms-auto"><span class="material-symbols-outlined text-white">add</span></a>
                     </div>
                 </div>
+                <!-- <a href="add-to-cart-2.html?${queryParams}" class="stretched-link"></a> -->
             </div>
-        `).join('');
+        `}).join('');
 
         // Return the slider HTML  <a href="add-to-cart-2.html" class="stretched-link"></a> 
         return `

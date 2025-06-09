@@ -19,23 +19,28 @@
    <body class="bg-light">
       <div class="osahan-page d-flex flex-column vh-100 bg-light">
          <div class="osahan-page-header d-flex align-items-center justify-content-between mb-auto p-3">
-            <a href="add-to-cart.html" class="text-black bg-white rounded-pill shadow-sm icon-sm"><span class="mdi mdi-arrow-left mdi-18px"></span></a>
+            <a href="home.html" class="text-black bg-white rounded-pill shadow-sm icon-sm"><span class="mdi mdi-arrow-left mdi-18px"></span></a>
             <h6 class="mb-0 ms-3 me-auto text-black fw-bold"></h6>
             <div class="d-flex align-items-center gap-2">
-               <a href="notification.html" class="icon-sm shadow-sm"><span class="mdi mdi-heart-outline mdi-18px"></span></a>
-               <a href="notification.html" class="icon-sm shadow-sm"><span class="mdi mdi-bell-outline mdi-18px"></span></a>
+               <a href="notification.html" class="icon-sm shadow-sm position-relative">
+                  <span class="mdi mdi-heart-outline mdi-18px"></span>
+               </a>
+               <a href="review-payment.html" class="icon-sm shadow-sm position-relative">
+                  <span class="mdi mdi-cart-outline mdi-18px"></span>
+                  <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle cart-count">0</span>
+               </a>
                <a href="#" class="toggle d-flex align-items-center justify-content-center bg-white shadow-sm icon-sm fs-5 hc-nav-trigger hc-nav-1" role="button" aria-controls="hc-nav-1"><i class="bi bi-list mdi-18px"></i></a>
             </div>
          </div>
          <div class="osahan-page-body vh-100 my-auto overflow-auto p-3">
             <div class="head text-center">
-               <span class="badge bg-primary text-white rounded-pill py-2 px-3 mb-1">Healthy</span>
-               <h1 class="mb-0 display-5 fw-semibold">Chicken Hell</h1>
-               <p class="text-secondary opacity-75 mb-3">Best Chicken Ever</p>
-               <img class="img-fluid w-75 mb-4 rounded-5 shadow" src="img/list/6.jpeg">
+               <span class="badge bg-primary text-white rounded-pill py-2 px-3 mb-1 category-badge">Healthy</span>
+               <h1 class="mb-0 display-5 fw-semibold food-name">Chicken Hell</h1>
+               <p class="text-secondary opacity-75 mb-3 food-description">Best Chicken Ever</p>
+               <img class="img-fluid w-75 mb-4 rounded-5 shadow food-image" src="img/list/6.jpeg">
                <div class="add-btn d-flex align-items-center justify-content-center mb-3">
-                  <h1 class="mb-0 display-5 fw-semibold">$12</h1>
-                  <h3 class="text-secondary opacity-75 mb-0 mt-2">.99</h3>
+                  <h1 class="mb-0 display-5 fw-semibold food-price">$12</h1>
+                  <h3 class="text-secondary opacity-75 mb-0 mt-2 food-price-cents">.99</h3>
                </div>
                <div class="btn-group gap-2 mb-4" role="group" aria-label="Basic checkbox toggle button group">
                   <input type="checkbox" class="btn-check" id="btncheck1c" autocomplete="off">
@@ -67,10 +72,10 @@
             </div>
          </div>
          <div class="osahan-page-footer mt-auto p-3">
-            <a href="review-payment.html" class="btn btn-primary rounded-4 w-100 btn-lg">Add To Cart</a>
+            <a href="review-payment.html" class="btn btn-primary rounded-4 w-100 btn-lg add-to-cart-btn">Add To Cart</a>
          </div>
       </div>
-		<!-- sidebar nav -->
+      <!-- sidebar nav -->
       <nav id="main-nav">
         <ul class="second-nav">
           <li class="osahan-user-profile bg-primary">
@@ -165,5 +170,73 @@
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
       <script src="js/script.js"></script>
+      <!-- Dynamic content and cart script -->
+      <script>
+         // Parse URL query parameters
+         const urlParams = new URLSearchParams(window.location.search);
+         const foodData = {
+            category: urlParams.get('category') || 'Healthy',
+            name: urlParams.get('name') || 'Chicken Hell',
+            description: urlParams.get('description') || 'Best Chicken Ever',
+            imageUrl: urlParams.get('imageUrl') || 'img/list/6.jpeg',
+            price: urlParams.get('price') || '12.99',
+            preparationTime: urlParams.get('preparationTime') || '30',
+            general_rating: urlParams.get('general_rating') || '4.5'
+         };
+
+         // Update DOM elements with food data
+         document.querySelector('.category-badge').textContent = foodData.category;
+         document.querySelector('.food-name').textContent = foodData.name;
+         document.querySelector('.food-description').textContent = foodData.description;
+         document.querySelector('.food-image').src = foodData.imageUrl;
+         const priceParts = foodData.price.split('.');
+         document.querySelector('.food-price').textContent = `$${priceParts[0]}`;
+         document.querySelector('.food-price-cents').textContent = priceParts[1] ? `.${priceParts[1]}` : '.99';
+
+         // Initialize cart count display
+         function updateCartCount() {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+            const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+            document.querySelector('.cart-count').textContent = cartCount;
+         }
+
+         // Add to cart function
+         function addToCart() {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+            const selectedSize = document.querySelector('.btn-check:checked + label')?.textContent || 'M';
+            const newItem = {
+               name: foodData.name,
+               price: parseFloat(foodData.price),
+               imageUrl: foodData.imageUrl,
+               quantity: 1,
+               size: selectedSize,
+               id: `${foodData.name}-${selectedSize}-${Date.now()}` // Unique ID for each item
+            };
+            console.log('Adding to cart:', newItem);
+
+            // Check if item with same name and size exists
+            const existingItemIndex = cartItems.findIndex(
+               item => item.name === newItem.name && item.size === newItem.size
+            );
+            if (existingItemIndex >= 0) {
+               cartItems[existingItemIndex].quantity += 1;
+            } else {
+               cartItems.push(newItem);
+            }
+
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            updateCartCount();
+            // window.location.href = 'review-payment.html';
+         }
+
+         // Attach event listener to Add To Cart button
+         document.querySelector('.add-to-cart-btn').addEventListener('click', (event) => {
+            event.preventDefault();
+            addToCart();
+         });
+
+         // Initialize cart count on page load
+         updateCartCount();
+      </script>
    </body>
 </html>
