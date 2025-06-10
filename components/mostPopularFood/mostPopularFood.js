@@ -34,7 +34,7 @@ import config from '../../js/store/config.js';
 /*                     el.style.backgroundColor = "#878787";  //
                     el.style.color = "#fff"; */
                     //el.setAttribute("onclick", `addRemove_to_favorites('${foodID}', false, this)`);
-                    const container = document.querySelector('.horizontal-slider')?.parentNode;
+                    const container = document.getElementById('most-popular-food-slider')?.parentNode;
                     if (container) {
                         container.innerHTML = await renderMostPopularFood();
                     }
@@ -68,7 +68,7 @@ import config from '../../js/store/config.js';
 /*                     el.style.backgroundColor = "#e91e63";
                     el.style.color = "#fff"; */
                     //el.setAttribute("onclick", `addRemove_to_favorites('${foodID}', true, this)`);
-                    const container = document.querySelector('.horizontal-slider')?.parentNode;
+                    const container = document.getElementById('most-popular-food-slider')?.parentNode;
                     if (container) {
                         container.innerHTML = await renderMostPopularFood();
                     }
@@ -153,7 +153,7 @@ export async function renderMostPopularFood() {
 
         // Return the slider HTML  <a href="add-to-cart-2.html" class="stretched-link"></a> 
         return `
-            <div class="horizontal-slider">
+            <div class="horizontal-slider" id="most-popular-food-slider">
                 ${sliderContent}
             </div>
         `;
