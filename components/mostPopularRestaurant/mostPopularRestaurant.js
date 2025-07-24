@@ -6,7 +6,7 @@ export async function renderMostPopularRestaurant() {
       const token = localStorage.getItem("loggedIn_userToken");
 
       const user = localStorage.getItem("userProfile");
-      console.log(user.email)
+      console.log(user)
 
       const request_city = "Berlin"; // Replace with the actual city value
       const request_area_code = "12689"; // Replace with the actual area code value
