@@ -34,7 +34,7 @@
          </div>
          <div class="osahan-page-body vh-100 my-auto overflow-auto p-3">
             <div class="head text-center">
-               <span class="badge bg-primary text-white rounded-pill py-2 px-3 mb-1 category-badge">Healthy</span>
+               <span class="badge bg-primary text-white rounded-pill py-2 px-3 mb-1 category-badge">${rest.phone || ''}</span>
                <h1 class="mb-0 display-5 fw-semibold food-name">Chicken Hell</h1>
                <p class="text-secondary opacity-75 mb-3 food-description">Best Chicken Ever</p>
                <img class="img-fluid w-75 mb-4 rounded-5 shadow food-image" src="img/list/6.jpeg">
@@ -171,72 +171,23 @@
       <!-- Custom js -->
       <script src="js/script.js" type="module"></script>
       <!-- Dynamic content and cart script -->
+      <script src="js/making_orders.js" type="module"></script>
+
       <script>
-         // Parse URL query parameters
-         const urlParams = new URLSearchParams(window.location.search);
-         const foodData = {
-            category: urlParams.get('category') || 'Healthy',
-            name: urlParams.get('name') || 'Chicken Hell',
-            description: urlParams.get('description') || 'Best Chicken Ever',
-            imageUrl: urlParams.get('imageUrl') || 'img/list/6.jpeg',
-            price: urlParams.get('price') || '12.99',
-            preparationTime: urlParams.get('preparationTime') || '30',
-            general_rating: urlParams.get('general_rating') || '4.5'
-         };
+      // Get query parameters from the URL
+      const params = new URLSearchParams(window.location.search);
 
-         // Update DOM elements with food data
-         document.querySelector('.category-badge').textContent = foodData.category;
-         document.querySelector('.food-name').textContent = foodData.name;
-         document.querySelector('.food-description').textContent = foodData.description;
-         document.querySelector('.food-image').src = foodData.imageUrl;
-         const priceParts = foodData.price.split('.');
-         document.querySelector('.food-price').textContent = `$${priceParts[0]}`;
-         document.querySelector('.food-price-cents').textContent = priceParts[1] ? `.${priceParts[1]}` : '.99';
+      // Get values (use your actual parameter names)
+      const name = params.get('name');
+      const description = params.get('description');
+      const image = params.get('image');
+      const price = params.get('price');
 
-         // Initialize cart count display
-         function updateCartCount() {
-            const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
-            const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-            document.querySelector('.cart-count').textContent = cartCount;
-         }
-
-         // Add to cart function
-         function addToCart() {
-            const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
-            const selectedSize = document.querySelector('.btn-check:checked + label')?.textContent || 'M';
-            const newItem = {
-               name: foodData.name,
-               price: parseFloat(foodData.price),
-               imageUrl: foodData.imageUrl,
-               quantity: 1,
-               size: selectedSize,
-               id: `${foodData.name}-${selectedSize}-${Date.now()}` // Unique ID for each item
-            };
-            console.log('Adding to cart:', newItem);
-
-            // Check if item with same name and size exists
-            const existingItemIndex = cartItems.findIndex(
-               item => item.name === newItem.name && item.size === newItem.size
-            );
-            if (existingItemIndex >= 0) {
-               cartItems[existingItemIndex].quantity += 1;
-            } else {
-               cartItems.push(newItem);
-            }
-
-            localStorage.setItem('cartItems', JSON.stringify(cartItems));
-            updateCartCount();
-            // window.location.href = 'review-payment.html';
-         }
-
-         // Attach event listener to Add To Cart button
-         document.querySelector('.add-to-cart-btn').addEventListener('click', (event) => {
-            event.preventDefault();
-            addToCart();
-         });
-
-         // Initialize cart count on page load
-         updateCartCount();
+      // Update DOM elements if values exist
+      if (name) document.querySelector('.food-name').textContent = name;
+      if (description) document.querySelector('.food-description').textContent = description;
+      if (image) document.querySelector('.food-image').src = image;
+      if (price) document.querySelector('.food-price').textContent = `$${price}`;
       </script>
    </body>
 </html>

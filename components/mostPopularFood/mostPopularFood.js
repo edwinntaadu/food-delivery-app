@@ -83,10 +83,16 @@ import config from '../../js/store/config.js';
                 console.error("Invalid food data type:", typeof food);
                 return;
         }
-
-    
-    
     };
+
+    window.selectItemToOrder = async function(item) {
+        if (!item) return; // Safety check
+        // Parse the item string to an object
+
+        const selectedItem = JSON.parse(item);
+    
+        console.log(selectedItem._id);
+    }
 
 export async function renderMostPopularFood() {
 
@@ -118,6 +124,7 @@ export async function renderMostPopularFood() {
         const sliderContent = popularFoods.slice(0, 5).map(food =>{
             // Encode food details as URL query parameters
             const queryParams = new URLSearchParams({
+                foodId: food._id,
                 name: food.name,
                 category: food.category,
                 imageUrl: food.imageUrl,
@@ -144,10 +151,9 @@ export async function renderMostPopularFood() {
                     </div>
                     <div class="d-flex align-items-center">
                         <h4 class="mb-0">€${food.price} <span class="text-secondary fs-6 mb-0 fw-normal text-decoration-line-through">€${food.price+Math.floor(Math.random() * (14 - 3 + 1)) + 3}</span></h4>
-                        <a href="add-to-cart-2.html?${queryParams}" class="text-decoration-none bg-dark rounded-pill p-1 d-flex align-items-center justify-content-center ms-auto"><span class="material-symbols-outlined text-white">add</span></a>
+                        <button id="selectItemforOrder" onclick="selectItemToOrder('${food}')" type="button" class="text-decoration-none bg-dark rounded-pill p-1 d-flex align-items-center justify-content-center ms-auto"><span class="material-symbols-outlined text-white">add</span></button>
                     </div>
                 </div>
-                <!-- <a href="add-to-cart-2.html?${queryParams}" class="stretched-link"></a> -->
             </div>
         `}).join('');
 
