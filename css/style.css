@@ -32,7 +32,11 @@ body {
 .title, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
 	font-family: "Sora", sans-serif;
 }
-
+/* Add this to your CSS file */
+a.active .material-symbols-outlined {
+  font-weight: bold;
+  /* Add more styles if needed */
+}
 /* Scroll Bar */
 ::-webkit-scrollbar-button {
 	width: 0;

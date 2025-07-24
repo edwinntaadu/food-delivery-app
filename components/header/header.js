@@ -47,7 +47,7 @@ export function renderHeader() {
 })(jQuery); */
 
 let server_url = config.API_URL;
-let district_city = "Berlin, Lichtenberg"; // Default value
+let district_city = "Uknown District"; // Default value
 
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("loggedIn_userToken");
@@ -69,7 +69,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (response.status !== 200) {
       const error = await response.json();
-      alert(error.message || "Failed to fetch user profile.");
+       window.location.href = './login.html'; // Redirect to sign-in page
+      //alert(error.message || "Failed to fetch user profile.");
       return;
     }
 
@@ -229,7 +230,9 @@ function createRestaurantCard(restaurant) {
   } catch (error) {
     console.error("Error fetching user profile:", error);
     district_city = "Default Location"; // Fallback value
+
     document.getElementById("header-container").innerHTML = renderHeader();
+  window.location.href = "login.html"; // Redirect to login page
   }
 });
 
