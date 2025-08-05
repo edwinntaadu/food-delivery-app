@@ -19,8 +19,8 @@
    <body class="bg-light">
       <div class="osahan-page d-flex flex-column vh-100 bg-light">
          <!-- header -->
-            <div id="header-container"></div>
-            <!-- header-end -->
+         <div id="header-container"></div>
+         <!-- header-end -->
          <div class="osahan-page-body vh-100 my-auto overflow-auto px-3">
             <div class="nav nav-pills rounded-pill mt-3 btn-group p-1 shadow-sm top-nav-tab bg-white" id="pills-tab" role="tablist">
                <div class="row w-100 m-0">
@@ -38,8 +38,7 @@
             </div>
             <h6 class="mb-3 mt-3 fw-bold">Your Favorite</h6>
             <!--card-->
-            <div class="d-flex gap-3 mb-3" id="fav_bookmark_list-container">
-            </div>
+            <div class="d-flex gap-3 mb-3" id="fav_bookmark_list-container"></div>
          </div>
          <!-- footer -->
          <div id="bottomNav-container"></div>
@@ -140,31 +139,43 @@
       <script src="vender/sidebar/hc-offcanvas-nav.js"></script>
       <!-- Custom js -->
       <script src="js/script.js" type="module"></script>
-      <!-- <script src="./components/bottomNav/bottomNav.js" type="module"></script> -->
       <script type="module">
          //import { renderSlider } from './components/advertsSlider/advertSlider.js';
          import { renderHeader } from './components/header/header.js';
          import { renderBottomNav } from './components/bottomNav/bottomNav.js';
-
-         import {renderFavoriteMeals} from './components/favoriteMeals/favoriteMeals.js';
-         import {renderBookmarkedRestaurants} from './components/bookmarkedRestaurants/bookmarkedRestaurants.js';
+         import { renderFavoriteMeals } from './components/favoriteMeals/favoriteMeals.js';
+         import { renderBookmarkedRestaurants } from './components/bookmarkedRestaurants/bookmarkedRestaurants.js';
          //import { renderHomeDefault } from './components/home_default/home_default.js';
+
+         // Render header and bottom navigation
          document.getElementById('header-container').innerHTML = renderHeader();
          document.getElementById('bottomNav-container').innerHTML = renderBottomNav();
-        
 
-         let disp_category = "food"
+
+         /*let disp_category = "food"
          if(disp_category ==="food"){
                 document.getElementById('fav_bookmark_list-container').innerHTML = await renderFavoriteMeals();
          }else if(disp_category ==="restaurant"){
                 document.getElementById('fav_bookmark_list-container').innerHTML = await renderBookmarkedRestaurants();
-         }
+         } */
 
-         // Function to render based on category
+         // Category state
+         window.disp_category = "food";
+
+         /* Function to render based on category
          async function renderCategory() {  
             if (disp_category === "food") {
                document.getElementById('fav_bookmark_list-container').innerHTML = await renderFavoriteMeals();
             } else if (disp_category === "restaurant") {
+               document.getElementById('fav_bookmark_list-container').innerHTML = await renderBookmarkedRestaurants();
+            }
+         } */
+
+         // Function to render based on category
+         async function renderCategory() {
+            if (window.disp_category === "food") {
+               document.getElementById('fav_bookmark_list-container').innerHTML = await renderFavoriteMeals();
+            } else if (window.disp_category === "restaurant") {
                document.getElementById('fav_bookmark_list-container').innerHTML = await renderBookmarkedRestaurants();
             }
          }
@@ -172,7 +183,7 @@
          // Initial render
          renderCategory();
 
-         // Add event listeners to toggle buttons
+         /* Add event listeners to toggle buttons
          document.getElementById('pills-meals-tab').addEventListener('click', async () => {
             disp_category = "food";
             await renderCategory();
@@ -185,8 +196,22 @@
             await renderCategory();
             document.getElementById('pills-restaurants-tab').classList.add('active');
             document.getElementById('pills-meals-tab').classList.remove('active');
+         }); */
+
+         // Add event listeners to toggle buttons
+         document.getElementById('pills-meals-tab').addEventListener('click', async () => {
+            window.disp_category = "food";
+            await renderCategory();
+            document.getElementById('pills-meals-tab').classList.add('active');
+            document.getElementById('pills-restaurants-tab').classList.remove('active');
          });
 
+         document.getElementById('pills-restaurants-tab').addEventListener('click', async () => {
+            window.disp_category = "restaurant";
+            await renderCategory();
+            document.getElementById('pills-restaurants-tab').classList.add('active');
+            document.getElementById('pills-meals-tab').classList.remove('active');
+         });
       </script>
    </body>
 </html>
